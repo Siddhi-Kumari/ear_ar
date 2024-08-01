@@ -1,11 +1,23 @@
-// frontend/src/components/EarModel.jsx
-import React from 'react';
-import { useLoader } from '@react-three/fiber';
+import React, { useEffect, useRef } from 'react';
+import { Canvas } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { useLoader } from '@react-three/fiber';
 
-const EarModel = ({ position }) => {
-  const gltf = useLoader(GLTFLoader, '/ear.glb'); // Adjust the URL as needed
-  return <primitive object={gltf.scene} position={position} />;
+const Model = ({ url, position }) => {
+    const gltf = useLoader(GLTFLoader, url);
+    return <primitive object={gltf.scene} position={position} />;
 };
 
-export default EarModel; // Make sure this is correctly exporting
+const EarModel = ({ position }) => {
+    const modelPath = `${process.env.PUBLIC_URL}/ear.glb`; // Correct path for GLB model
+
+    return (
+        <Canvas>
+            <ambientLight />
+            <pointLight position={[10, 10, 10]} />
+            <Model url={modelPath} position={position} />
+        </Canvas>
+    );
+};
+
+export default EarModel;

@@ -1,0 +1,9 @@
+/* EarDetection.css */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+video {
+    border: 2px solid #000;
+}

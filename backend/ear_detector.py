@@ -5,5 +5,5 @@ class EarDetector:
     def __init__(self):
         self.face_mesh_model = FaceMeshModel()
 
-    def process_frame(self, frame):
-        return self.face_mesh_model.get_ear_coordinates(frame)
+    def get_ear_coordinates(self, image):
+        return self.face_mesh_model.get_ear_coordinates(image)
