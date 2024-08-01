@@ -1,0 +1,6 @@
+/* Add your App-specific styles here */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
