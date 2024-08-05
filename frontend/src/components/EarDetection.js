@@ -3,8 +3,9 @@ import EarModelLoader from './EarModelLoader';
 
 const EarDetection = () => {
     const videoRef = useRef(null);
+    const canvasRef = useRef(null);
     const [landmarks, setLandmarks] = useState(null);
-    
+
     useEffect(() => {
         const startWebcam = async () => {
             try {
@@ -14,7 +15,7 @@ const EarDetection = () => {
                 const interval = setInterval(async () => {
                     const canvas = document.createElement('canvas');
                     const context = canvas.getContext('2d');
-                    canvas.width = 640; // Match webcam resolution
+                    canvas.width = 640;
                     canvas.height = 480;
 
                     context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
@@ -27,7 +28,7 @@ const EarDetection = () => {
                     });
                     const data = await response.json();
                     setLandmarks(data.landmarks);
-                }, 100); // Detect every 100ms
+                }, 100);
 
                 return () => clearInterval(interval);
             } catch (error) {
@@ -44,7 +45,13 @@ const EarDetection = () => {
             <video
                 ref={videoRef}
                 autoPlay
-                style={{ width: '640px', height: 'auto', borderRadius: '10px' }}
+                style={{ display: 'none' }} // Hide video element
+            />
+            <canvas
+                ref={canvasRef}
+                width={640}
+                height={480}
+                style={{ border: '2px solid #000', display: 'block' }} // Display the canvas
             />
             {landmarks && <EarModelLoader landmarks={landmarks} />}
         </div>

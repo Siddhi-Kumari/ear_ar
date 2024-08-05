@@ -6,10 +6,11 @@ const EarModelLoader = ({ landmarks }) => {
 
     useEffect(() => {
         if (landmarks.left_ear) {
+            // Adjust the position based on the webcam feed dimensions and model scaling
             setEarPosition([
-                landmarks.left_ear.x * 0.005, // Adjust these values based on your landmark detection logic
-                landmarks.left_ear.y * 0.005,
-                0, // Z position can be set based on your model's scale
+                (landmarks.left_ear[0] - 320) * 0.005, // Adjust these based on your webcam resolution
+                (240 - landmarks.left_ear[1]) * 0.005, // Flip Y-axis for correct positioning
+                0 // Z position, adjust as necessary
             ]);
         }
     }, [landmarks]);

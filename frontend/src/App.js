@@ -63,19 +63,37 @@ const App = () => {
                     <p>Right Ear: {JSON.stringify(landmarks.right_ear)}</p>
                 </div>
             )}
-            <Canvas style={{ height: '480px', width: '640px' }} camera={{ position: [0, 0, 5], fov: 75 }}>
+            <Canvas style={{ height: '480px', width: '640px', position: 'absolute', top: 0, left: 0 }} camera={{ position: [0, 0, 5], fov: 75 }}>
                 <ambientLight intensity={0.5} />
                 <pointLight position={[10, 10, 10]} />
                 {earCoordinates.left && (
-                    <EarModel position={[earCoordinates.left[0] / 100, earCoordinates.left[1] / 100, 0]} />
+                    <EarModel position={calculatePosition(earCoordinates.left)} />
                 )}
                 {earCoordinates.right && (
-                    <EarModel position={[earCoordinates.right[0] / 100, earCoordinates.right[1] / 100, 0]} />
+                    <EarModel position={calculatePosition(earCoordinates.right)} />
                 )}
                 <OrbitControls />
             </Canvas>
         </div>
     );
+};
+
+const calculatePosition = (ear) => {
+    const canvasWidth = 640;  // Width of the canvas
+    const canvasHeight = 480; // Height of the canvas
+
+    // Define scale factors for positioning the model
+    const scaleFactorX = 0.018; // Adjust this value based on how large/small the model appears
+    const scaleFactorY = 0.065; // Adjust this value based on how large/small the model appears
+
+    // Calculate normalized coordinates for Three.js
+    const x = (ear[0] - canvasWidth / 2) * scaleFactorX; // Shift the origin to the center and scale
+    const y = (canvasHeight / 2 - ear[1]) * scaleFactorY; // Invert Y and scale
+
+    // Set Z position for the model
+    const z = 0; // You may adjust this based on the model's size
+
+    return [x, y, z]; // Return the adjusted coordinates
 };
 
 const EarModel = ({ position }) => {
@@ -84,14 +102,14 @@ const EarModel = ({ position }) => {
 
     useEffect(() => {
         gltfLoader.load('/ear.glb', (gltf) => {
-            console.log('Model loaded:', gltf);
+            console.log('Model loaded:', gltf); // Log to see if the model is loading
             setModel(gltf.scene);
         }, undefined, (error) => {
             console.error('Error loading model:', error);
         });
     }, [gltfLoader]);
 
-    return model ? <primitive object={model} position={position} scale={[0.1, 0.1, 0.1]} /> : null;
+    return model ? <primitive object={model} position={position} scale={[1, 1, 1]} /> : null; // Adjust scale as needed
 };
 
 export default App;

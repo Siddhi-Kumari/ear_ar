@@ -19,7 +19,7 @@ const MainComponent = () => {
     }, []);
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
             <h1>Ear Landmark Detection</h1>
             <WebcamFeed videoRef={videoRef} />
             <EarModelLoader landmarks={landmarks} />
