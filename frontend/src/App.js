@@ -78,17 +78,17 @@ const App = () => {
     );
 };
 
-const calculatePosition = (ear) => {
+const calculatePosition = (ear, isLeftEar) => {
     const canvasWidth = 640;  // Width of the canvas
     const canvasHeight = 480; // Height of the canvas
 
     // Define scale factors for positioning the model
-    const scaleFactorX = 0.018; // Adjust this value based on how large/small the model appears
-    const scaleFactorY = 0.065; // Adjust this value based on how large/small the model appears
+    const scaleFactorX = 0.016; // Adjust this value based on how large/small the model appears
+    const scaleFactorY = 0.016; // Adjust this value based on how large/small the model appears
 
     // Calculate normalized coordinates for Three.js
-    const x = (ear[0] - canvasWidth / 2) * scaleFactorX; // Shift the origin to the center and scale
-    const y = (canvasHeight / 2 - ear[1]) * scaleFactorY; // Invert Y and scale
+    const x = (ear[0] - canvasWidth / 2) * scaleFactorX + (isLeftEar ? -0.2 : 0.1);; // Shift the origin to the center and scale
+    const y = (canvasHeight / 2 - ear[1]) * scaleFactorY-2; // Invert Y and scale
 
     // Set Z position for the model
     const z = 0; // You may adjust this based on the model's size
